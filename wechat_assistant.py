@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-PyCharm :
+PyCharm : 
 Copyright (C) 2016-2017 EINDEX Li
 
 @Author        : EINDEX Li
@@ -10,8 +10,7 @@ Copyright (C) 2016-2017 EINDEX Li
 @Last Modified : 2017/3/8
 """
 from pprint import pprint
-import sys
-sys.path.insert(0,u"..\\itchatmp")
+
 import itchatmp
 import requests
 import models
@@ -27,6 +26,7 @@ itchatmp.update_config(itchatmp.WechatConfig(
     appSecret=config['wechat']['app_secret']))
 
 session = requests.session()
+
 
 def command(cmd, user):
     c = cmd.split('_')[0]
@@ -45,8 +45,6 @@ def command(cmd, user):
 
 def user_command(func):
     def weppar(msg):
-        print("####"*20)
-        print(msg)
         db = models.DBSession()
         user = db.query(models.User).filter_by(wechat_id=msg['FromUserName']).first()
         if user:
@@ -67,6 +65,7 @@ def user_command(func):
         return result
 
     return weppar
+
 
 @itchatmp.msg_register(TEXT)
 @user_command
@@ -145,8 +144,5 @@ def location_get(msg, user, db, *args):
 
 if __name__ == '__main__':
     # models.Base.metadata.create_all(models.engine)
-    itchatmp.run(port=80)
-    r = itchatmp.messages.send_all(itchatmp.content.TEXT,"bye")
-    print(r)
-
-
+    itchatmp.run(port=8000)
+    print(itchatmp.send('123', config['wechat']['admin']))

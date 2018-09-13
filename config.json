@@ -1,0 +1,10 @@
+{
+    "wechat": {
+      "token":"testitchatmp",
+      "appid":"wx39472499ed448bf2",
+      "app_secret":"86157bec4e5e28e46f251690786ca08b"
+    },
+  "config":{
+    "db":"sqlite:///data.db"
+  }
+}
