@@ -11,7 +11,7 @@ Copyright (C) 2016-2017 EINDEX Li
 """
 from pprint import pprint
 import sys
-sys.path.insert(0,u"..\\itchatmp")
+sys.path.insert(0,u"../itchatmp")
 import itchatmp
 import requests
 import models
@@ -142,10 +142,20 @@ def location_get(msg, user, db, *args):
         # todo save into log
         return ' 链接 GPS 解析失败'
 
+def get_fn(handler):
+    db = models.DBSession()
+    sXml =''
+    for row in db.query(models.User).all():
+        print(row,row.name)
+        sXml+="<li>"+row.name+"</li>"
+        
+    db.commit()
+    db.close()   
+    return "main_get_fun"+sXml
 
 if __name__ == '__main__':
     # models.Base.metadata.create_all(models.engine)
-    itchatmp.run(port=80)
+    itchatmp.run(port=80,getFunc=get_fn)
     r = itchatmp.messages.send_all(itchatmp.content.TEXT,"bye")
     print(r)
 
